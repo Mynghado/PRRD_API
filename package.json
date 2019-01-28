@@ -1,0 +1,19 @@
+{
+    "name": "PRRD_API",
+    "version": "1.0.0",
+    "description": "",
+    "author": "",
+    "license": "ISC",
+    "main": "index.js",
+    "keywords": [],
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+        "express": "^4.16.4",
+        "cors": "^2.8.5"
+    },
+    "devDependencies": {
+        "nodemon": "^1.18.6"
+    }
+}
