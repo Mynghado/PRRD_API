@@ -5,49 +5,61 @@
 // **************************
 
 // 1.
-// IMPORTS
+// IMPORTS & INSTANCIATIONS
 // Import des nodes modules
-const express = require('express');
-const cors = require('cors');
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
+const express = require("express");
+const cors = require("cors");
+var bodyParser = require("body-parser");
+var mongoose = require("mongoose");
 
-// Déclaration et Instanciation du router
+// Instanciations
 const router = express();
-router.use(cors({ origin: true }));
+router.use(
+  cors({
+    origin: true
+  })
+);
+router.use(bodyParser.json());
 
 // Import des modèles de données dans ./models
-require('./models/modelTest');
+require("./models/modelTest");
 
 // Import des routes dans ./routes
-router.use('/machin', require('./routes/machin.route')); 
-router.use('/test', require('./routes/routeTest')); 
-// ----- Fin des imports -------------
+router.use("/machin", require("./routes/machin.route"));
+router.use("/test", require("./routes/routeTest"));
 
-
-
-mongoose.connect('mongodb://locacalhost:27017/test');
 
 
 // 2.
-// listen for requests
-router.listen(process.env.port || 3000, function(){ // listen to the defined port, or 4000 otherwise
-    console.log("\n\n\n *********** Listening for requests / En attente de requêtes ************** \n\n\n");
+// CONNEXION AVEC MONGODB
+const url = "mongodb://locacalhost:27017/new_york"
+mongoose.connect(url);
+mongoose.Promise = global.Promise;
+
+mongoose.connection.on('connected', () => {
+  console.log(`mongoose connection open to ${url}`);
+});
+
+mongoose.connection.on('error', (err) => {
+  console.log(`mongoose connection err: `, err);
+});
 
 
 
-/*
-// Partie pour le DHTMLX
-var port = 1337;
-var app = express();
- 
+// 3.
+// DEFINITION DU PORT DE L'API
+const port = process.env.port || 3000;
+router.listen(port, function () {
+  console.log(
+    "\n\n\n *********** Listening for requests / En attente de requêtes ************** \n " +
+    "Port utilisé : " + port + "\n\n\n"
+  );
+
+
+
+  /*
+// Partie pour DHTMLX
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.urlencoded({ extended: true }));
- 
-app.listen(port, function(){
-    console.log("Server is running on port "+port+"...");
-});
 */
-
-
 });
