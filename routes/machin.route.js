@@ -1,29 +1,32 @@
 const express = require('express');
-const router = express();
 const cors = require('cors');
+
+
+const router = express();
+
 
 // Automatically allow cross-origin requests
 router.use(cors({ origin: true }));
 
-router.get('/', function (req, res) {
+router.get('/get', function (req, res) {
     res.status(200).json({
-        message: "GET REQUEST"
+        message: "GET HI REQUEST"
     })
 });
 
-router.put('/', function (req, res) {
+router.put('/put', function (req, res) {
     res.status(200).json({
         message: "PUT REQUEST"
     })
 });
 
-router.post('/', function (req, res) {
+router.post('/post', function (req, res) {
     res.status(200).json({
         message: "POST REQUEST"
     })
 });
 
-router.delete('/', function (req, res) {
+router.delete('/delete', function (req, res) {
     res.status(200).json({
         message: "DELETE REQUEST"
     })
