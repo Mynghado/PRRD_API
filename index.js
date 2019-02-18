@@ -4,8 +4,8 @@
 //
 // **************************
 
-
-// ----- Début des Imports -----------
+// 1.
+// IMPORTS
 // Import des nodes modules
 const express = require('express');
 const cors = require('cors');
@@ -14,35 +14,25 @@ var mongoose = require('mongoose');
 
 // Déclaration et Instanciation du router
 const router = express();
+router.use(cors({ origin: true }));
 
 // Import des modèles de données dans ./models
 require('./models/modelTest');
 
 // Import des routes dans ./routes
 router.use('/machin', require('./routes/machin.route')); 
-//router.use('/test', require('./routes/routeTest')); 
+router.use('/test', require('./routes/routeTest')); 
 // ----- Fin des imports -------------
 
 
 
-
-// Déclaration et Instanciation du router
-mongoose.connect('mongodb://locacalhost/test');
+mongoose.connect('mongodb://locacalhost:27017/test');
 
 
-
-// Automatically allow cross-origin requests
-router.use(cors({ origin: true }));
-
-
-// use the defined routes
-// use the file machin.route.js dans /routes
-
-
-
+// 2.
 // listen for requests
 router.listen(process.env.port || 3000, function(){ // listen to the defined port, or 4000 otherwise
-    console.log("Listening for requests / En attente de requêtes");
+    console.log("\n\n\n *********** Listening for requests / En attente de requêtes ************** \n\n\n");
 
 
 
