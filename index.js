@@ -36,10 +36,12 @@ const url = "mongodb://localhost:27017/test"
 mongoose.connect(url);
 mongoose.Promise = global.Promise;
 
+// Message si connexion OK
 mongoose.connection.on('connected', () => {
   console.log(`mongoose connection open to / connexion ouverte avec : ${url}`);
 });
 
+// Message si connexion KO
 mongoose.connection.on('error', (err) => {
   console.log(`mongoose connection err: `, err);
 });

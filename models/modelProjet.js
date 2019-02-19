@@ -1,5 +1,4 @@
 // ************************************************************
-//
 //  Fichier de modèle
 //  Ce modèle de données aura une route associée dans ../routes
 //  
@@ -8,7 +7,7 @@
 
 
 // 1.
-// IMPORT
+// IMPORTS
 var mongoose = require('mongoose');
 
 
@@ -31,7 +30,7 @@ var schemaProjet = new mongoose.Schema({
 
 
 // 3.
-// On associe un objet mongo à notre schéma
+// On associe un modèle mongo à notre schéma
 // => Transformation du schéma en modèle
 // INFO : le premier paramètre sera le nom de la collection dans mongoDB
 var modeleProjet = mongoose.model('projet', schemaProjet);
