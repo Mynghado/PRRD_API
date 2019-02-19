@@ -1,10 +1,10 @@
 // ************************************************************
-//  Fichier de modèle pour les Projets
+//  Fichier de modèle pour les Acteurs
 //  Ce modèle de données aura une route associée dans ../routes
 //  Ce modèle importe le module mongoose
 //  Tous les objets de ce type pourront utiliser les méthodes natives de mongoose
 //
-//  Crée le 18/02/2019
+//  Crée le 19/02/2019
 // ************************************************************
 
 // 1.
@@ -15,17 +15,9 @@ var mongoose = require("mongoose");
 // On déclare notre schéma de données
 // => Données attendues par mongo
 var schemaProjet = new mongoose.Schema({
-  project_manager: String,
-  project_director: String,
-  project_team: String,
-  description: String,
-  marker: String,
-  deliverable: String,
-  human_resources: String,
-  material_resources: String,
-  it_resources: String,
-  planned_budget: String,
-  partners: String
+  nom: String,
+  prenom: String,
+  role: String,
 });
 
 // 3.
