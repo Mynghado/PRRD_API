@@ -1,6 +1,8 @@
 // ************************************************************
-//  Fichier de modèle
+//  Fichier de modèle pour les Projets
 //  Ce modèle de données aura une route associée dans ../routes
+//  Ce modèle importe le module mongoose
+//  Tous les objets de ce type pourront utiliser les méthodes natives de mongoose
 //  
 //  Crée le 18/02/2019
 // ************************************************************
@@ -13,7 +15,7 @@ var mongoose = require('mongoose');
 
 // 2.
 // On déclare notre schéma de données
-// => Données attendues par Mongo
+// => Données attendues par mongo
 var schemaProjet = new mongoose.Schema({
     project_manager: String,
     project_director: String,

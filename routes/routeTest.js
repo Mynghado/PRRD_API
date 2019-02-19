@@ -24,11 +24,23 @@ router.use(
 
 // 2.
 // METHODES GET / POST / PUT / DELETE
+
+// GET ALL (OK)
 router.get("/get", function (req, res) {
-    res.status(200).json({
-        message: "Salut !"
+    modelTest.find({}).then(function (p) {
+        res.send(p);
     });
 });
+
+// GET ID (OK)
+router.get("/get/:id", function (req, res) {
+    modelTest.findById({
+        _id: req.params.id
+    }).then(function (p) {
+        res.send(p);
+    });
+});
+
 
 // POST (OK)
 router.post("/post", function (req, res) {
@@ -38,7 +50,7 @@ router.post("/post", function (req, res) {
     });
 });
 
-// PUT
+// PUT (OK)
 // Ne pas oublier /:id
 router.put("/put/:id", function (req, res) {
     console.log("L'element à mettre à jour est le " + req.params.id);

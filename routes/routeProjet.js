@@ -25,10 +25,29 @@ router.use(
 // 2.
 // METHODES GET / POST / PUT / DELETE
 
-// GET (à faire)
+// GET ALL (OK)
 router.get("/get", function (req, res) {
-    res.status(200).json({
-        message: "Salut !"
+    modelTest.find({}).then(function (p) {
+        res.send(p);
+    });
+});
+
+
+// GET ID (OK)
+router.get("/get/:id", function (req, res) {
+    modelTest.findById({
+        _id: req.params.id
+    }).then(function (p) {
+        res.send(p);
+    });
+});
+
+
+// POST (OK)
+router.post("/post", function (req, res) {
+    console.log(req.body);
+    modelProjet.create(req.body).then(function (p) {
+        res.send(p);
     });
 });
 
@@ -56,16 +75,7 @@ router.put("/put/:id", function (req, res) {
 });
 
 
-
-// POST (OK)
-router.post("/post", function (req, res) {
-    console.log(req.body);
-    modelProjet.create(req.body).then(function (test) {
-        res.send(test);
-    });
-});
-
-// DELETE 
+// DELETE (OK)
 router.delete("/delete/:id", function (req, res) {
     console.log("L'element à supprimer est le " + req.params.id);
     modelProjet.findByIdAndRemove({
