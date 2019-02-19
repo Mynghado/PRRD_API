@@ -15,7 +15,7 @@ var mongoose = require('mongoose');
 // => Données attendues par Mongo
 var testSchema = new mongoose.Schema({
     nom: String,
-    Age: Number,
+    age: Number,
     
 });
 

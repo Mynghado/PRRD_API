@@ -2,6 +2,7 @@
 //
 // Fichier d'entrée de l'API
 //
+//  Crée le 18/02/2019
 // **************************
 
 // 1.
@@ -12,7 +13,7 @@ const cors = require("cors");
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 
-// Instanciations
+// Instanciation du router
 const router = express();
 router.use(
   cors({
@@ -21,23 +22,22 @@ router.use(
 );
 router.use(bodyParser.json());
 
-// Import des modèles de données dans ./models
+// Import des modèles de données (depuis ./models)
 require("./models/modelTest");
 
-// Import des routes dans ./routes
-router.use("/machin", require("./routes/machin.route"));
+// Import des routes (depuis ./routes)
 router.use("/test", require("./routes/routeTest"));
-
+router.use("/projet", require("./routes/routeProjet"));
 
 
 // 2.
 // CONNEXION AVEC MONGODB
-const url = "mongodb://locacalhost:27017/new_york"
+const url = "mongodb://localhost:27017/test"
 mongoose.connect(url);
 mongoose.Promise = global.Promise;
 
 mongoose.connection.on('connected', () => {
-  console.log(`mongoose connection open to ${url}`);
+  console.log(`mongoose connection open to / connexion ouverte avec : ${url}`);
 });
 
 mongoose.connection.on('error', (err) => {

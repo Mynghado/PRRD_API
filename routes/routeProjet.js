@@ -7,12 +7,15 @@
 // *************************************************************
 
 // 1.
-// Imports
+// IMPORTS
 const express = require("express");
 const cors = require("cors");
 const mongodb = require('mongodb');
 
+// Import du modèle associé
+const modelProjet = require("./../models/modelProjet")
 
+// Instanciation du router
 const router = express();
 router.use(
     cors({
@@ -34,12 +37,12 @@ router.put("/put", function (req, res) {
     });
 });
 
+
 router.post("/post", function (req, res) {
     console.log(req.body);
-    res.send({
-        type: 'POST',
-        nom: req.body.nom
-    })
+    modelProjet.create(req.body).then(function (test) {
+        res.send(test);
+    });
 });
 
 router.delete("/delete", function (req, res) {

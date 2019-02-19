@@ -15,7 +15,7 @@ var mongoose = require('mongoose');
 // 2.
 // On déclare notre schéma de données
 // => Données attendues par Mongo
-var testSchema = new mongoose.Schema({
+var schemaProjet = new mongoose.Schema({
     project_manager: String,
     project_director: String,
     project_team: String,
@@ -32,9 +32,11 @@ var testSchema = new mongoose.Schema({
 
 // 3.
 // On associe un objet mongo à notre schéma
-var projet = mongoose.model('projet', testSchema);
+// => Transformation du schéma en modèle
+// INFO : le premier paramètre sera le nom de la collection dans mongoDB
+var modeleProjet = mongoose.model('projet', schemaProjet);
 
 
 // 4.
-// On exporte le module que l'on vient de créer
-module.exports = projet;
+// On exporte le modèle que l'on vient de créer
+module.exports = modeleProjet;
