@@ -26,7 +26,7 @@ router.use(
 // METHODES GET / POST / PUT / DELETE
 
 // GET ALL (OK)
-router.get("/get", function (req, res) {
+router.get("/", function (req, res) {
     modelTest.find({}).then(function (p) {
         res.send(p);
     });
@@ -34,7 +34,7 @@ router.get("/get", function (req, res) {
 
 
 // GET ID (OK)
-router.get("/get/:id", function (req, res) {
+router.get("/:id", function (req, res) {
     modelTest.findById({
         _id: req.params.id
     }).then(function (p) {
@@ -44,7 +44,7 @@ router.get("/get/:id", function (req, res) {
 
 
 // POST (OK)
-router.post("/post", function (req, res) {
+router.post("/", function (req, res) {
     console.log(req.body);
     modelProjet.create(req.body).then(function (p) {
         res.send(p);
@@ -54,7 +54,7 @@ router.post("/post", function (req, res) {
 
 // PUT (OK)
 // Ne pas oublier /:id
-router.put("/put/:id", function (req, res) {
+router.put("/:id", function (req, res) {
     console.log("L'element à mettre à jour est le " + req.params.id);
 
     // MàJ
@@ -76,7 +76,7 @@ router.put("/put/:id", function (req, res) {
 
 
 // DELETE (OK)
-router.delete("/delete/:id", function (req, res) {
+router.delete("/:id", function (req, res) {
     console.log("L'element à supprimer est le " + req.params.id);
     modelProjet.findByIdAndRemove({
         _id: req.params.id
