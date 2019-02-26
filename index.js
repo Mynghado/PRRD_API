@@ -22,12 +22,10 @@ router.use(
 );
 router.use(bodyParser.json());
 
-// Import des modèles de données (depuis ./models)
-require("./models/modelTest");
-
 // Import des routes (depuis ./routes)
 router.use("/test", require("./routes/routeTest"));
 router.use("/projet", require("./routes/routeProjet"));
+router.use("/tasks", require("./routes/routeTask"));
 
 
 // 2.
