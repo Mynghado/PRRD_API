@@ -26,6 +26,7 @@ router.use(bodyParser.json());
 router.use("/test", require("./routes/routeTest"));
 router.use("/projet", require("./routes/routeProjet"));
 router.use("/tasks", require("./routes/routeTask"));
+router.use("/links", require("./routes/routeLink"));
 
 
 // 2.

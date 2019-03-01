@@ -2,10 +2,14 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
-const Task = require('./../models/task')
+const Task = require('../models/gantt/gantt_task')
+const Link = require('../models/gantt/gantt_links')
+const dateformat = require('dateformat');
+
 
 
 const app = express()
+const dateFormat = "dd-mm-yyyy";
 app.use(morgan('combined'))
 app.use(bodyParser.json())
 app.use(cors())
@@ -14,91 +18,49 @@ app.use(cors())
 function convertBodyToTask(body) {
     return new Task({
         id: body.id,
-        projectId: body.projectId,
+        start_date: dateformat(body.start_date, dateFormat),
         text: body.text,
-        parent: body.parent,
-        start_date: body.start_date,
-        end_date: body.end_date,
-        duration: body.duration,
         progress: body.progress,
-        index: body.$index,
-        level: body.$level,
-        no_end: body.$no_end,
-        no_start: body.$no_start,
-        open: body.$open,
-        rendered_parent: body.$rendered_parent,
-        rendered_type: body.$rendered_type,
-        source: body.$source,
-        target: body.$target
+        duration: body.duration,
+        sortOrder: body.sortOrder,
+        parent: body.parent,
+        projectId: body.projectId,
     })
 }
 
 function updateTaskFromBody(task, body) {
-    if(body.id !== undefined){
-        task.id = body.id;
+    if (body.start_date !== undefined) {
+        task.start_date = dateformat(body.start_date, dateFormat);;
     }
-    if(body.projectId !== undefined){
-        task.projectId = body.projectId;
-    }
-    if(body.text !== undefined){
+    if (body.text !== undefined) {
         task.text = body.text;
     }
-    if(body.parent !== undefined){
-        task.parent = body.parent;
-    }
-    if(body.start_date !== undefined){
-        task.start_date = body.start_date;
-    }
-    if(body.end_date !== undefined){
-        task.end_date = body.end_date;
-    }
-    if(body.duration !== undefined){
-        task.duration = body.duration;
-    }
-    if(body.progress !== undefined){
+    if (body.progress !== undefined) {
         task.progress = body.progress;
     }
-    if(body.index !== undefined){
-        task.index = body.index;
+    if (body.duration !== undefined) {
+        task.duration = body.duration;
     }
-    if(body.level !== undefined){
-        task.level = body.level;
+    if (body.parent !== undefined) {
+        task.parent = body.parent;
     }
-    if(body.no_end !== undefined){
-        task.no_end = body.no_end;
+    if (body.projectId !== undefined) {
+        task.projectId = body.projectId;
     }
-    if(body.no_start !== undefined){
-        task.no_start = body.no_start;
-    }
-    if(body.open !== undefined){
-        task.open = body.open;
-    }
-    if(body.rendered_parent !== undefined){
-        task.rendered_parent = body.rendered_parent;
-    }
-    if(body.rendered_type !== undefined){
-        task.rendered_type = body.rendered_type;
-    }
-    if(body.source !== undefined){
-        task.source = body.source;
-    }
-    if(body.target !== undefined){
-        task.target = body.target;
-    }
-    
+
     return task;
 }
 // Create task
 app.post('/', (req, res) => {
     var db = req.db;
-    var new_task = convertBodyToTask(req.body);
-    new_task.save(function (error) {
+    var task = convertBodyToTask(req.body);
+    task.save(function (error) {
         if (error) {
             console.log(error)
         }
         res.send({
             success: true,
-            message: new_task
+            task: task
         })
     })
 })
@@ -116,10 +78,27 @@ app.get('/', (req, res) => {
 
 })
 
+app.get("/withLinks", function (req, res) {
+    var db = req.db;
+    Task.find({}, function (err, rows) {
+        if (err) {
+            console.log(err);
+        }
+        Link.find({}, function (err, links) {
+            if (err) {
+                console.log(err);
+            }
+            res.send({
+                 data:rows, collections: { links : links } 
+            });
+        });
+    });
+});
+
 // Find task by id
 app.get('/:id', (req, res) => {
     var db = req.db;
-    Task.findById(req.params.id, function (error, task) {
+    Task.findOne({ id: req.params.id}, function (error, task) {
         if (error) {
             console.error(error);
         }
@@ -130,19 +109,18 @@ app.get('/:id', (req, res) => {
 // Update task by id
 app.put('/:id', (req, res) => {
     var db = req.db;
-    Task.findById(req.params.id, function (error, task) {
+    Task.findOne({ id: req.params.id}, function (error, task) {
         if (error) {
             console.error(error);
         }
-
-        task = updateTaskFromBody(task, req.body)
+        updateTaskFromBody(task, req.body);
         task.save(function (error) {
             if (error) {
                 console.log(error)
             }
             res.send({
                 success: true,
-                message: task
+                task: task
             })
         })
     })
@@ -152,17 +130,15 @@ app.put('/:id', (req, res) => {
 app.delete('/:id', (req, res) => {
     var db = req.db;
     Task.remove({
-      _id: req.params.id
-    }, function(err, task){
-      if (err)
-        res.send(err)
-      res.send({
-        success: true,
-        message: task
-      })
+        id: req.params.id
+    }, function (err, task) {
+        if (err)
+            res.send(err)
+        res.send({
+            success: true,
+            task: task
+        })
     })
-  })
-
-
+})
 
 module.exports = app;
