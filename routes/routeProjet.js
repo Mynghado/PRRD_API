@@ -2,6 +2,9 @@
 //  Fichier de route pour les Projets
 //  Cette route aura un modèle de données associé dans ../models
 //
+//
+//  http://localhost:8080/projet
+//
 //  Crée le 18/02/2019
 // *************************************************************
 

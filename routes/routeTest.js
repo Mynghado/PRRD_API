@@ -1,10 +1,13 @@
 // *************************************************************
 //  Fichier de route pour les tests
-//  Ce fichier servira également de référence pour les futures routes
-//  A utiliser uniquement en intégration
+//  
+//  A UTILISER EN INTEGRATION
+//
 //  Cette route aura un modèle de données associé dans ../models
 //
-//  Route : .../test/
+//  http://localhost:8080/test
+//
+//  Crée le 18/02/2019
 // *************************************************************
 
 // 1.
