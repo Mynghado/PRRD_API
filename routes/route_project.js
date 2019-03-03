@@ -15,7 +15,7 @@ const cors = require("cors");
 const mongodb = require('mongodb');
 
 // Import du modèle associé
-const modelProjet = require("./../models/modelProjet")
+const modelProjet = require("../models/model_project")
 
 // Instanciation du router
 const router = express();

@@ -10,6 +10,8 @@
 // 1.
 // IMPORTS
 var mongoose = require("mongoose");
+//var users = require("./model_users");
+
 
 // 2.
 // On déclare notre schéma de données
@@ -25,7 +27,8 @@ var schemaProjet = new mongoose.Schema({
   material_resources: String,
   it_resources: String,
   planned_budget: String,
-  partners: String
+  partners: String,
+  //listActors_fk : [{type: Schema.Types.ObjectId , ref: 'users'}],
 });
 
 // 3.

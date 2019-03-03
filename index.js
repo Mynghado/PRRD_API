@@ -23,11 +23,11 @@ router.use(
 router.use(bodyParser.json());
 
 // Import des routes (depuis ./routes)
-router.use("/test", require("./routes/routeTest"));
-router.use("/projet", require("./routes/routeProjet"));
-router.use("/tasks", require("./routes/routeTask"));
-router.use("/links", require("./routes/routeLink"));
-
+router.use("/test", require("./routes/route_test"));
+router.use("/projet", require("./routes/route_project"));
+router.use("/tasks", require("./routes/route_task"));
+router.use("/links", require("./routes/route_link"));
+router.use("/users", require("./routes/route_user"));
 
 // 2.
 // CONNEXION AVEC MONGODB
