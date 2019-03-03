@@ -10,7 +10,6 @@
 // 1.
 // IMPORTS
 var mongoose = require("mongoose");
-//var users = require("./model_users");
 
 
 // 2.
@@ -28,14 +27,15 @@ var schemaProjet = new mongoose.Schema({
   it_resources: String,
   planned_budget: String,
   partners: String,
-  //listActors_fk : [{type: Schema.Types.ObjectId , ref: 'users'}],
+  listActors_fk : [{type: mongoose.Schema.Types.ObjectId , ref: "User"}],
+  listTasks_fk : [{type: mongoose.Schema.Types.ObjectId , ref: "Gantt_task"}],
 });
 
 // 3.
 // On associe un modèle mongo à notre schéma
 // => Transformation du schéma en modèle
 // INFO : le premier paramètre sera le nom de la collection dans mongoDB
-var modeleProjet = mongoose.model("projet", schemaProjet);
+var modeleProjet = mongoose.model("Project", schemaProjet);
 
 // 4.
 // On exporte le modèle que l'on vient de créer

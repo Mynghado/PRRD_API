@@ -41,10 +41,12 @@ router.get("/", function (req, res) {
 // GET ID (OK)
 router.get("/:id", function (req, res) {
     modelUser.findById({
-        _id: req.params.id
-    }).then(function (p) {
-        res.send(p);
-    });
+            _id: req.params.id
+        })
+        .populate("listProjects_fk")
+        .then(function (p) {
+            res.send(p);
+        });
 });
 
 

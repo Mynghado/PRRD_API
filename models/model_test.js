@@ -22,7 +22,7 @@ var testSchema = new mongoose.Schema({
 
 // 3.
 // On associe un objet mongo à notre schéma
-var test = mongoose.model('test', testSchema);
+var test = mongoose.model('Test', testSchema);
 
 
 // 4.

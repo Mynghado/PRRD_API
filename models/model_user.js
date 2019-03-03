@@ -21,14 +21,14 @@ var schemaUser = new mongoose.Schema({
   prenom: String,
   role: String,
   password : String,
-  listProjects_fk : [{type: mongoose.Schema.Types.ObjectId , ref: project}],
+  listProjects_fk : [{type: mongoose.Schema.Types.ObjectId , ref: "Project"}],
 });
 
 // 3.
 // On associe un modèle mongo à notre schéma
 // => Transformation du schéma en modèle
 // INFO : le premier paramètre sera le nom de la collection dans mongoDB
-var modeleUser = mongoose.model("user", schemaUser);
+var modeleUser = mongoose.model("User", schemaUser);
 
 // 4.
 // On exporte le modèle que l'on vient de créer
