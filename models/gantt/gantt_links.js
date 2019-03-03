@@ -11,7 +11,7 @@ var linkSchema = new Schema ({
 // On associe un modèle mongo à notre schéma
 // => Transformation du schéma en modèle
 // INFO : le premier paramètre sera le nom de la collection dans mongoDB
-var Link = mongoose.model("gantt_link", linkSchema);
+var Link = mongoose.model("Gantt_link", linkSchema);
 
 // 4.
 // On exporte le modèle que l'on vient de créer

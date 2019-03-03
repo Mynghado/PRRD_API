@@ -30,20 +30,27 @@ router.use(
 // METHODES GET / POST / PUT / DELETE
 
 // GET ALL (OK)
+
 router.get("/", passport.authenticate('jwt', { session: false}), function (req, res) {
-    modelProjet.find({}).then(function (p) {
-        res.send(p);
-    });
+    modelProjet.find({})
+        .populate("listActors_fk")
+        .populate("listTasks_fk")
+        .then(function (p) {
+            res.send(p);
+        });
 });
 
 
 // GET ID (OK)
 router.get("/:id", passport.authenticate('jwt', { session: false}), function (req, res) {
     modelProjet.findById({
-        _id: req.params.id
-    }).then(function (p) {
-        res.send(p);
-    });
+            _id: req.params.id
+        })
+        .populate("listActors_fk")
+        .populate("listTasks_fk")
+        .then(function (p) {
+            res.send(p);
+        });
 });
 
 

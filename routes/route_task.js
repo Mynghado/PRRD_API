@@ -75,7 +75,7 @@ app.get('/', (req, res) => {
         res.send({
             tasks: tasks
         })
-    })
+    }).populate("projectId")
 
 })
 
@@ -90,27 +90,34 @@ app.get("/withLinks", function (req, res) {
                 console.log(err);
             }
             res.send({
-                 data:rows, collections: { links : links } 
+                data: rows,
+                collections: {
+                    links: links
+                }
             });
         });
-    });
+    }).populate("projectId");
 });
 
 // Find task by id
 app.get('/:id', passport.authenticate('jwt', { session: false}), (req, res) => {
     var db = req.db;
-    Task.findOne({ id: req.params.id}, function (error, task) {
+    Task.findOne({
+        id: req.params.id
+    }, function (error, task) {
         if (error) {
             console.error(error);
         }
         res.send(task)
-    })
+    }).populate("projectId")
 })
 
 // Update task by id
 app.put('/:id', passport.authenticate('jwt', { session: false}), (req, res) => {
     var db = req.db;
-    Task.findOne({ id: req.params.id}, function (error, task) {
+    Task.findOne({
+        id: req.params.id
+    }, function (error, task) {
         if (error) {
             console.error(error);
         }

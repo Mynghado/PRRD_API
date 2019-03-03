@@ -47,10 +47,12 @@ router.get("/", passport.authenticate('jwt', { session: false}), function (req, 
 // GET ID (OK)
 router.get("/:id", passport.authenticate('jwt', { session: false}), function (req, res) {
     modelUser.findById({
-        _id: req.params.id
-    }).then(function (p) {
-        res.send(p);
-    });
+            _id: req.params.id
+        })
+        .populate("listProjects_fk")
+        .then(function (p) {
+            res.send(p);
+        });
 });
 
 
