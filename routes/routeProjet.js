@@ -30,7 +30,7 @@ router.use(
 
 // GET ALL (OK)
 router.get("/", function (req, res) {
-    modelTest.find({}).then(function (p) {
+    modelProjet.find({}).then(function (p) {
         res.send(p);
     });
 });
@@ -38,7 +38,7 @@ router.get("/", function (req, res) {
 
 // GET ID (OK)
 router.get("/:id", function (req, res) {
-    modelTest.findById({
+    modelProjet.findById({
         _id: req.params.id
     }).then(function (p) {
         res.send(p);
