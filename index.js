@@ -33,6 +33,7 @@ router.use("/users", require("./routes/route_user"));
 // CONNEXION AVEC MONGODB
 const url = "mongodb://localhost:27017/test"
 mongoose.connect(url);
+mongoose.set('useCreateIndex', true);
 mongoose.Promise = global.Promise;
 
 // Message si connexion OK

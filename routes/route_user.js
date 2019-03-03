@@ -12,7 +12,11 @@
 // IMPORTS
 const express = require("express");
 const cors = require("cors");
-const mongodb = require('mongodb');
+const jwt = require('jsonwebtoken');
+const config = require('../config/config');
+const passport = require('passport');
+require('../config/auth')(passport);
+
 
 // Import du modèle associé
 const modelUser = require("../models/model_user")
@@ -28,8 +32,10 @@ router.use(
 // 2.
 // METHODES GET / POST / PUT / DELETE
 
+
+
 // GET ALL (OK)
-router.get("/", function (req, res) {
+router.get("/", passport.authenticate('jwt', { session: false}), function (req, res) {
     modelUser.find({})
         .populate("listProjects_fk")
         .then(function (p) {
@@ -39,7 +45,7 @@ router.get("/", function (req, res) {
 
 
 // GET ID (OK)
-router.get("/:id", function (req, res) {
+router.get("/:id", passport.authenticate('jwt', { session: false}), function (req, res) {
     modelUser.findById({
         _id: req.params.id
     }).then(function (p) {
@@ -49,17 +55,49 @@ router.get("/:id", function (req, res) {
 
 
 // POST (OK)
-router.post("/", function (req, res) {
-    console.log(req.body);
-    modelUser.create(req.body).then(function (p) {
-        res.send(p);
+router.post("/", passport.authenticate('signup', {
+    session: false
+}), async function (req, res, next) {
+    res.json({
+        message: 'Signup successful',
+        user: req.user
     });
 });
 
+router.post('/login', async (req, res, next) => {
+    passport.authenticate('login', async (err, user, info) => {
+        try {
+            if (err || !user) {
+                return next(new Error(info.message));
+            }
+            req.login(user, {
+                session: false
+            }, async (error) => {
+                if (error) return next(error)
+                //We don't want to store the sensitive information such as the
+                //user password in the token so we pick only the email and id
+                const body = {
+                    _id: user._id,
+                    nomUtilisateur: user.nomUtilisateur
+                };
+                //Sign the JWT token and populate the payload with the user email and id
+                const token = jwt.sign({
+                    user: body
+                }, config.secret);
+                //Send back the token to the user
+                return res.json({
+                    token
+                });
+            });
+        } catch (error) {
+            return next(error);
+        }
+    })(req, res, next);
+});
 
 // PUT (OK)
 // Ne pas oublier /:id
-router.put("/:id", function (req, res) {
+router.put("/:id", passport.authenticate('jwt', { session: false}), function (req, res) {
     console.log("L'element à mettre à jour est le " + req.params.id);
 
     // MàJ
@@ -81,7 +119,7 @@ router.put("/:id", function (req, res) {
 
 
 // DELETE (OK)
-router.delete("/:id", function (req, res) {
+router.delete("/:id", passport.authenticate('jwt', { session: false}), function (req, res) {
     console.log("L'element à supprimer est le " + req.params.id);
     modelUser.findByIdAndRemove({
         _id: req.params.id

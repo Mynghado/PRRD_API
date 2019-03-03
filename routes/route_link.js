@@ -3,7 +3,8 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
 const Link = require('../models/gantt/gantt_links')
-
+const passport = require('passport');
+require('../config/auth')(passport);
 
 const app = express()
 app.use(morgan('combined'))
@@ -37,7 +38,7 @@ function updateLinkFromBody(link, body) {
     return link;
 }
 // Create link
-app.post('/', (req, res) => {
+app.post('/', passport.authenticate('jwt', { session: false}), (req, res) => {
     var db = req.db;
     var new_link = convertBodyToLink(req.body);
     new_link.save(function (error) {
@@ -52,7 +53,7 @@ app.post('/', (req, res) => {
 })
 
 // Find all link
-app.get('/', (req, res) => {
+app.get('/', passport.authenticate('jwt', { session: false}), (req, res) => {
     Link.find({}, function (error, links) {
         if (error) {
             console.error(error);
@@ -65,7 +66,7 @@ app.get('/', (req, res) => {
 })
 
 // Find link by id
-app.get('/:id', (req, res) => {
+app.get('/:id', passport.authenticate('jwt', { session: false}), (req, res) => {
     var db = req.db;
     Link.findOne({ id: req.params.id}, function (error, link) {
         if (error) {
@@ -76,7 +77,7 @@ app.get('/:id', (req, res) => {
 })
 
 // Update link by id
-app.put('/:id', (req, res) => {
+app.put('/:id', passport.authenticate('jwt', { session: false}), (req, res) => {
     var db = req.db;
     Link.findOne({ id: req.params.id}, function (error, link) {
         if (error) {
@@ -97,7 +98,7 @@ app.put('/:id', (req, res) => {
 })
 
 // Delete link by id
-app.delete('/:id', (req, res) => {
+app.delete('/:id', passport.authenticate('jwt', { session: false}), (req, res) => {
     var db = req.db;
     Link.remove({
       id: req.params.id

@@ -5,7 +5,8 @@ const morgan = require('morgan')
 const Task = require('../models/gantt/gantt_task')
 const Link = require('../models/gantt/gantt_links')
 const dateformat = require('dateformat');
-
+const passport = require('passport');
+require('../config/auth')(passport);
 
 
 const app = express()
@@ -51,7 +52,7 @@ function updateTaskFromBody(task, body) {
     return task;
 }
 // Create task
-app.post('/', (req, res) => {
+app.post('/', passport.authenticate('jwt', { session: false}), (req, res) => {
     var db = req.db;
     var task = convertBodyToTask(req.body);
     task.save(function (error) {
@@ -96,7 +97,7 @@ app.get("/withLinks", function (req, res) {
 });
 
 // Find task by id
-app.get('/:id', (req, res) => {
+app.get('/:id', passport.authenticate('jwt', { session: false}), (req, res) => {
     var db = req.db;
     Task.findOne({ id: req.params.id}, function (error, task) {
         if (error) {
@@ -107,7 +108,7 @@ app.get('/:id', (req, res) => {
 })
 
 // Update task by id
-app.put('/:id', (req, res) => {
+app.put('/:id', passport.authenticate('jwt', { session: false}), (req, res) => {
     var db = req.db;
     Task.findOne({ id: req.params.id}, function (error, task) {
         if (error) {
@@ -127,7 +128,7 @@ app.put('/:id', (req, res) => {
 })
 
 // Delete task by id
-app.delete('/:id', (req, res) => {
+app.delete('/:id', passport.authenticate('jwt', { session: false}), (req, res) => {
     var db = req.db;
     Task.remove({
         id: req.params.id

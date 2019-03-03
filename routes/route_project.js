@@ -12,7 +12,8 @@
 // IMPORTS
 const express = require("express");
 const cors = require("cors");
-const mongodb = require('mongodb');
+const passport = require('passport');
+require('../config/auth')(passport);
 
 // Import du modèle associé
 const modelProjet = require("../models/model_project")
@@ -29,7 +30,7 @@ router.use(
 // METHODES GET / POST / PUT / DELETE
 
 // GET ALL (OK)
-router.get("/", function (req, res) {
+router.get("/", passport.authenticate('jwt', { session: false}), function (req, res) {
     modelProjet.find({}).then(function (p) {
         res.send(p);
     });
@@ -37,7 +38,7 @@ router.get("/", function (req, res) {
 
 
 // GET ID (OK)
-router.get("/:id", function (req, res) {
+router.get("/:id", passport.authenticate('jwt', { session: false}), function (req, res) {
     modelProjet.findById({
         _id: req.params.id
     }).then(function (p) {
@@ -47,7 +48,7 @@ router.get("/:id", function (req, res) {
 
 
 // POST (OK)
-router.post("/", function (req, res) {
+router.post("/", passport.authenticate('jwt', { session: false}), function (req, res) {
     console.log(req.body);
     modelProjet.create(req.body).then(function (p) {
         res.send(p);
@@ -57,7 +58,7 @@ router.post("/", function (req, res) {
 
 // PUT (OK)
 // Ne pas oublier /:id
-router.put("/:id", function (req, res) {
+router.put("/:id", passport.authenticate('jwt', { session: false}), function (req, res) {
     console.log("L'element à mettre à jour est le " + req.params.id);
 
     // MàJ
@@ -79,7 +80,7 @@ router.put("/:id", function (req, res) {
 
 
 // DELETE (OK)
-router.delete("/:id", function (req, res) {
+router.delete("/:id", passport.authenticate('jwt', { session: false}), function (req, res) {
     console.log("L'element à supprimer est le " + req.params.id);
     modelProjet.findByIdAndRemove({
         _id: req.params.id
