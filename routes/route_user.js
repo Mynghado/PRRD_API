@@ -49,7 +49,7 @@ router.get("/:id", passport.authenticate('jwt', { session: false}), function (re
     modelUser.findById({
             _id: req.params.id
         })
-        .populate("listProjects_fk")
+        .populate("listProjects_fk", "project_name", "description")
         .then(function (p) {
             res.send(p);
         });
