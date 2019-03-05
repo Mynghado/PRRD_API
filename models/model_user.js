@@ -10,7 +10,6 @@
 // 1.
 // IMPORTS
 var mongoose = require("mongoose");
-var project = require("./model_project");
 const bcrypt = require('bcrypt');
 
 
@@ -23,6 +22,8 @@ var schemaUser = new mongoose.Schema({
   prenom: String,
   role: String,
   password : String,
+  password : String,
+  username: String,
   listProjects_fk : [{type: mongoose.Schema.Types.ObjectId , ref: "Project"}],
 });
 

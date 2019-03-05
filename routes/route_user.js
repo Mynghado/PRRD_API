@@ -37,7 +37,7 @@ router.use(
 // GET ALL (OK)
 router.get("/", passport.authenticate('jwt', { session: false}), function (req, res) {
     modelUser.find({})
-        .populate("listProjects_fk")
+        .populate("listProjects_fk", "project_name", "description")
         .then(function (p) {
             res.send(p);
         });

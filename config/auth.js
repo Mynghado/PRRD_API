@@ -27,7 +27,7 @@ module.exports  = function (passport) {
     try {
       //Find the user associated with the email provided by the user
       const user = await UserModel.findOne({
-        nomUtilisateur: username
+        username: username
       });
       if (!user) {
         //If the user isn't found in the database, return a message

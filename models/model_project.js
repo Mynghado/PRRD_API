@@ -16,6 +16,7 @@ var mongoose = require("mongoose");
 // On déclare notre schéma de données
 // => Données attendues par mongo
 var schemaProjet = new mongoose.Schema({
+  project_name: String,
   project_manager: String,
   project_director: String,
   project_team: String,
