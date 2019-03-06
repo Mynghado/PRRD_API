@@ -22,8 +22,6 @@ var schemaUser = new mongoose.Schema({
   prenom: String,
   role: String,
   password : String,
-  password : String,
-  username: String,
   listProjects_fk : [{type: mongoose.Schema.Types.ObjectId , ref: "Project"}],
 });
 

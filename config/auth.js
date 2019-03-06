@@ -8,12 +8,19 @@ const UserModel = require('../models/model_user');
 
 module.exports  = function (passport) {
   //Create a passport middleware to handle user registration
-  passport.use('signup', new JsonStrategy(async (username, password, done) => {
+  passport.use('signup', new JsonStrategy({
+    usernameProp: 'nomUtilisateur',
+    passReqToCallback: true
+  },async (req, nomUtilisateur, password, done) => {
+    console.log(req.body);
     try {
       //Save the information provided by the user to the the database
       const user = await UserModel.create({
-        username,
-        password
+        nomUtilisateur: nomUtilisateur,
+        nom: req.body.nom,
+        prenom: req.body.prenom,
+        role: req.body.role,
+        password: password
       });
       //Send the user information to the next middleware
       return done(null, user);
@@ -23,16 +30,16 @@ module.exports  = function (passport) {
   }));
 
   //Create a passport middleware to handle User login
-  passport.use('login', new JsonStrategy(async (username, password, done) => {
+  passport.use('login', new JsonStrategy({usernameProp: 'nomUtilisateur',}, async (nomUtilisateur, password, done) => {
     try {
       //Find the user associated with the email provided by the user
       const user = await UserModel.findOne({
-        username: username
+        nomUtilisateur: nomUtilisateur
       });
       if (!user) {
         //If the user isn't found in the database, return a message
         return done(null, false, {
-          message: 'User not found'
+          message: "L'utilisateur n'existe pas"
         });
       }
       //Validate password and make sure it matches with the corresponding hash stored in the database
@@ -40,12 +47,12 @@ module.exports  = function (passport) {
       const validate = await user.isValidPassword(password);
       if (!validate) {
         return done(null, false, {
-          message: 'Wrong Password'
+          message: 'Mot de passe incorrecte'
         });
       }
       //Send the user information to the next middleware
       return done(null, user, {
-        message: 'Logged in Successfully'
+        message: 'La connexion est un succes'
       });
     } catch (error) {
       return done(error);
