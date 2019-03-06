@@ -56,7 +56,6 @@ router.get("/:id", passport.authenticate('jwt', { session: false}), function (re
 
 // POST (OK)
 router.post("/", passport.authenticate('jwt', { session: false}), function (req, res) {
-    console.log(req.body);
     modelProjet.create(req.body).then(function (p) {
         res.send(p);
     });

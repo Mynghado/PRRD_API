@@ -12,7 +12,6 @@ module.exports  = function (passport) {
     usernameProp: 'nomUtilisateur',
     passReqToCallback: true
   },async (req, nomUtilisateur, password, done) => {
-    console.log(req.body);
     try {
       //Save the information provided by the user to the the database
       const user = await UserModel.create({
@@ -67,7 +66,6 @@ module.exports  = function (passport) {
     //we expect the user to send the token as a query paramater with the name 'secret_token'
     jwtFromRequest: ExtractJWT.fromAuthHeaderWithScheme("jwt")
   }, async (token, done) => {
-    console.log(token);
     try {
       //Pass the user details to the next middleware
       return done(null, token.user);

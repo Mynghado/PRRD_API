@@ -35,9 +35,11 @@ router.use(
 
 
 // GET ALL (OK)
-router.get("/", passport.authenticate('jwt', { session: false}), function (req, res) {
+router.get("/", passport.authenticate('jwt', {
+    session: false
+}), function (req, res) {
     modelUser.find({})
-        .populate("listProjects_fk", "project_name", "description")
+        .populate("listProjects_fk", "project_name description")
         .then(function (p) {
             res.send(p);
         });
@@ -45,11 +47,13 @@ router.get("/", passport.authenticate('jwt', { session: false}), function (req, 
 
 
 // GET ID (OK)
-router.get("/:id", passport.authenticate('jwt', { session: false}), function (req, res) {
+router.get("/:id", passport.authenticate('jwt', {
+    session: false
+}), function (req, res) {
     modelUser.findById({
             _id: req.params.id
         })
-        .populate("listProjects_fk", "project_name", "description")
+        .populate("listProjects_fk", "project_name description")
         .then(function (p) {
             res.send(p);
         });
@@ -99,7 +103,9 @@ router.post('/login', async (req, res, next) => {
 
 // PUT (OK)
 // Ne pas oublier /:id
-router.put("/:id", passport.authenticate('jwt', { session: false}), function (req, res) {
+router.put("/:id", passport.authenticate('jwt', {
+    session: false
+}), function (req, res) {
     console.log("L'element à mettre à jour est le " + req.params.id);
 
     // MàJ
@@ -121,7 +127,9 @@ router.put("/:id", passport.authenticate('jwt', { session: false}), function (re
 
 
 // DELETE (OK)
-router.delete("/:id", passport.authenticate('jwt', { session: false}), function (req, res) {
+router.delete("/:id", passport.authenticate('jwt', {
+    session: false
+}), function (req, res) {
     console.log("L'element à supprimer est le " + req.params.id);
     modelUser.findByIdAndRemove({
         _id: req.params.id
