@@ -28,8 +28,7 @@ var schemaProjet = new mongoose.Schema({
   it_resources: String,
   planned_budget: String,
   partners: String,
-  listActors_fk : [{type: mongoose.Schema.Types.ObjectId , ref: "User"}],
-  listTasks_fk : [{type: mongoose.Schema.Types.ObjectId , ref: "Gantt_task"}],
+  listActors_fk : [{type: mongoose.Schema.Types.ObjectId , ref: "User"}]
 });
 
 // 3.

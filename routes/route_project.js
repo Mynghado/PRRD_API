@@ -34,7 +34,6 @@ router.use(
 router.get("/", passport.authenticate('jwt', { session: false}), function (req, res) {
     modelProjet.find({})
         .populate("listActors_fk", "nomUtilisateur")
-        .populate("listTasks_fk")
         .then(function (p) {
             res.send(p);
         });
@@ -47,7 +46,6 @@ router.get("/:id", passport.authenticate('jwt', { session: false}), function (re
             _id: req.params.id
         })
         .populate("listActors_fk", "nomUtilisateur")
-        .populate("listTasks_fk")
         .then(function (p) {
             res.send(p);
         });

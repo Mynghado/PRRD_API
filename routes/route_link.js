@@ -61,7 +61,7 @@ app.get('/', passport.authenticate('jwt', { session: false}), (req, res) => {
         res.send({
             links: links
         })
-    })
+    }).populate("projectId")
 
 })
 
@@ -73,7 +73,7 @@ app.get('/:id', passport.authenticate('jwt', { session: false}), (req, res) => {
             console.error(error);
         }
         res.send(link)
-    })
+    }).populate("projectId")
 })
 
 // Update link by id
@@ -94,7 +94,7 @@ app.put('/:id', passport.authenticate('jwt', { session: false}), (req, res) => {
                 link: link
             })
         })
-    })
+    }).populate("projectId")
 })
 
 // Delete link by id

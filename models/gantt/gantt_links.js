@@ -6,6 +6,7 @@ var linkSchema = new Schema ({
     source: Number,
     target: String,
     type: Number,
+    projectId: {type: mongoose.Schema.Types.ObjectId , ref: "Project"},
 });
 
 // On associe un modèle mongo à notre schéma

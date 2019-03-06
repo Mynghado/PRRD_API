@@ -99,6 +99,26 @@ app.get("/withLinks", function (req, res) {
     }).populate("projectId");
 });
 
+//Find task and links by projectID
+app.get("/:projectId", function (req, res) {
+    Task.find({projectId: req.params.projectId}, function (err, rows) {
+        if (err) {
+            console.log(err);
+        }
+        Link.find({projectId: req.params.projectId}, function (err, links) {
+            if (err) {
+                console.log(err);
+            }
+            res.send({
+                data: rows,
+                collections: {
+                    links: links
+                }
+            });
+        });
+    }).populate("projectId");
+});
+
 // Find task by id
 app.get('/:id', passport.authenticate('jwt', { session: false}), (req, res) => {
     var db = req.db;
@@ -131,7 +151,7 @@ app.put('/:id', passport.authenticate('jwt', { session: false}), (req, res) => {
                 task: task
             })
         })
-    })
+    }).populate("projectId")
 })
 
 // Delete task by id
