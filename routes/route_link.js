@@ -18,6 +18,7 @@ function convertBodyToLink(body) {
         source: body.source,
         target: body.target,
         type: body.type,
+        projectId: body.projectId,
     })
 }
 
